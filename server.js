@@ -49,32 +49,32 @@ app.get('/shoes', (req, res) => {
     } else if (Object.keys(req.query).length === 3) {
         const triQueriedShoes = [];
         shoes.forEach((shoe) => {
-            if(shoe.type === req.query.type && shoe.price < req.query.maxprice && shoe.price > req.query.minprice) {
+            if(shoe.type === req.query.type && shoe.price <= req.query['max-price'] && shoe.price >= req.query['min-price']) {
                 triQueriedShoes.push(shoe);
             };
         });
         res.send(triQueriedShoes);
     } else if (Object.keys(req.query).length === 2) {
-        if(req.query.type && req.query.maxprice) {
+        if(req.query.type && req.query['max-price']) {
             const biQueriedShoes1 = [];
             shoes.forEach((shoe) => {
-                if(shoe.type === req.query.type && shoe.price < req.query.maxprice) {
+                if(shoe.type === req.query.type && shoe.price <= req.query['max-price']) {
                     biQueriedShoes1.push(shoe);
                 };
             });
             res.send(biQueriedShoes1);
-        } else if(req.query.type && req.query.minprice) {
+        } else if(req.query.type && req.query['min-price']) {
             const biQueriedShoes2 = [];
             shoes.forEach((shoe) => {
-                if(shoe.type === req.query.type && shoe.price > req.query.minprice) {
+                if(shoe.type === req.query.type && shoe.price >= req.query['min-price']) {
                     biQueriedShoes2.push(shoe);
                 };
             });
             res.send(biQueriedShoes2);
-        } else if(req.query.maxprice && req.query.minprice) {
+        } else if(req.query['max-price'] && req.query['min-price']) {
             const biQueriedShoes3 = [];
             shoes.forEach((shoe) => {
-                if(shoe.price < req.query.maxprice && shoe.price > req.query.minprice) {
+                if(shoe.price <= req.query['max-price'] && shoe.price >= req.query['min-price']) {
                     biQueriedShoes3.push(shoe);
                 };
             });
@@ -89,18 +89,18 @@ app.get('/shoes', (req, res) => {
                 };
             });
             res.send(uniQueriedShoes1);
-        } else if (req.query.maxprice) {
+        } else if (req.query['max-price']) {
             const uniQueriedShoes2 = [];
             shoes.forEach((shoe) => {
-                if(shoe.price < req.query.maxprice) {
+                if(shoe.price <= req.query['max-price']) {
                     uniQueriedShoes2.push(shoe);
                 };
             });
             res.send(uniQueriedShoes2);
-        } else if (req.query.minprice) {
+        } else if (req.query['min-price']) {
             const uniQueriedShoes3 = [];
             shoes.forEach((shoe) => {
-                if(shoe.price > req.query.minprice) {
+                if(shoe.price >= req.query['min-price']) {
                     uniQueriedShoes3.push(shoe);
                 };
             });
