@@ -42,12 +42,69 @@ const shoes = [
     { name: "Jet Boots", price: 1000, type: "boot" },
     { name: "Fifty-Inch Heels", price: 175, type: "heel" }
 ];
-// Stuck on filtering by the query conditions.
+
 app.get('/shoes', (req, res) => {
     if(Object.keys(req.query).length === 0) {
-        res.send(`<ul><li>${shoes[0].name}<li>${shoes[1].name}<li>${shoes[2].name}<li>${shoes[3].name}<li>${shoes[4].name}<li>${shoes[5].name}<li>${shoes[6].name}`);
-    } else {
-        const queriedShoes = shoes.filter(shoe => shoe.type === req.query.type && shoe.price > req.query.min-price && shoe.price < req.query.max-price);
-        res.send(`${queriedShoes}`);
+        res.send(shoes);
+    } else if (Object.keys(req.query).length === 3) {
+        const triQueriedShoes = [];
+        shoes.forEach((shoe) => {
+            if(shoe.type === req.query.type && shoe.price < req.query.maxprice && shoe.price > req.query.minprice) {
+                triQueriedShoes.push(shoe);
+            };
+        });
+        res.send(triQueriedShoes);
+    } else if (Object.keys(req.query).length === 2) {
+        if(req.query.type && req.query.maxprice) {
+            const biQueriedShoes1 = [];
+            shoes.forEach((shoe) => {
+                if(shoe.type === req.query.type && shoe.price < req.query.maxprice) {
+                    biQueriedShoes1.push(shoe);
+                };
+            });
+            res.send(biQueriedShoes1);
+        } else if(req.query.type && req.query.minprice) {
+            const biQueriedShoes2 = [];
+            shoes.forEach((shoe) => {
+                if(shoe.type === req.query.type && shoe.price > req.query.minprice) {
+                    biQueriedShoes2.push(shoe);
+                };
+            });
+            res.send(biQueriedShoes2);
+        } else if(req.query.maxprice && req.query.minprice) {
+            const biQueriedShoes3 = [];
+            shoes.forEach((shoe) => {
+                if(shoe.price < req.query.maxprice && shoe.price > req.query.minprice) {
+                    biQueriedShoes3.push(shoe);
+                };
+            });
+            res.send(biQueriedShoes3);
+        };
+    } else if (Object.keys(req.query).length === 1) {
+        if (req.query.type) {
+            const uniQueriedShoes1 = [];
+            shoes.forEach((shoe) => {
+                if(shoe.type === req.query.type) {
+                    uniQueriedShoes1.push(shoe);
+                };
+            });
+            res.send(uniQueriedShoes1);
+        } else if (req.query.maxprice) {
+            const uniQueriedShoes2 = [];
+            shoes.forEach((shoe) => {
+                if(shoe.price < req.query.maxprice) {
+                    uniQueriedShoes2.push(shoe);
+                };
+            });
+            res.send(uniQueriedShoes2);
+        } else if (req.query.minprice) {
+            const uniQueriedShoes3 = [];
+            shoes.forEach((shoe) => {
+                if(shoe.price > req.query.minprice) {
+                    uniQueriedShoes3.push(shoe);
+                };
+            });
+            res.send(uniQueriedShoes3);
+        };
     };
 });
